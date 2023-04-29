@@ -9,7 +9,7 @@ import Main from './components/Main';
 function App() {
   return (
     <>
-      <BrowserRouter basename='faucet-racescan'>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />}></Route>
         </Routes>
