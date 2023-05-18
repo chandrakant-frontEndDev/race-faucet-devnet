@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.657161e9.css",
+    "main.js": "/static/js/main.3afdb035.js",
+    "static/js/787.bc0ab79d.chunk.js": "/static/js/787.bc0ab79d.chunk.js",
+    "static/media/hero_bg.png": "/static/media/hero_bg.942532f43eaef2ca28c3.png",
+    "static/media/hero_left.png": "/static/media/hero_left.263e30afa3552db45053.png",
+    "static/media/race_logo.svg": "/static/media/race_logo.e11b67d1e190e95d52e6039197294a0d.svg",
+    "index.html": "/index.html",
+    "main.657161e9.css.map": "/static/css/main.657161e9.css.map",
+    "main.3afdb035.js.map": "/static/js/main.3afdb035.js.map",
+    "787.bc0ab79d.chunk.js.map": "/static/js/787.bc0ab79d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.657161e9.css",
+    "static/js/main.3afdb035.js"
+  ]
+}
