@@ -100,7 +100,7 @@ function MainHero() {
                         Web3.eth.sendSignedTransaction(data.rawTransaction, function (error, hash) {
                             if (!error) {
                                 setTransactionHash(hash)
-                                toast.success("race send successfully", {
+                                toast.success("ETH send successfully", {
                                     position: "top-center",
                                     autoClose: 5000,
                                     hideProgressBar: true,
@@ -186,10 +186,10 @@ function MainHero() {
                                                     />
                                                     {/* <p id="wallet_address_error" style={{ color: "red", display: "none" }}>*Please Enter your wallet address</p> */}
                                                 </div>
-                                                {error.isEmpty && <p className='text-danger error'>Field cannot be empty!</p>}
+                                                {error.isEmpty && <p className='text-danger error'>Please enter your wallet address</p>}
                                                 {error.isValidAddress && <p className='text-danger error'>Wallet Address is not valid! Please enter valid address.</p>}
                                                 <div className="race_btn">
-                                                    <button onClick={submitHandler}>Give Me RACE</button>
+                                                    <button onClick={submitHandler}>Give Me ETH</button>
                                                 </div>
                                                 <p>What is the RACE faucet used for?</p>
 

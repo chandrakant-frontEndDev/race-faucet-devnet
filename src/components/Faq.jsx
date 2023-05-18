@@ -33,7 +33,7 @@ function Faq() {
                         <Accordion.Item eventKey="1">
                           <Accordion.Header>How Does It Works?</Accordion.Header>
                           <Accordion.Body>
-                            You can request 0.01 Goerli ETH every 24h with a RACE Faucet.
+                            You can request 0.001 Goerli ETH every 24h with a RACE Faucet.
                           </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="2">
