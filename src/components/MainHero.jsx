@@ -171,7 +171,7 @@ function MainHero() {
                                         <div className="race_faucet_bg">
                                             <div className="main_content">
                                                 <h1>RACE Faucet</h1>
-                                                <h6>Receive 1 RACE / Day. Fast & Reliable.
+                                                <h6>Receive 0.001 ETH / Day. Fast & Reliable.
                                                     <br></br>No Authentication Needed.
                                                 </h6>
 
