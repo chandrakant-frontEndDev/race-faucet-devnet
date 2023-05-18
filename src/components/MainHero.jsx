@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col, Table } from 'react-bootstrap'
 import RaceLogo from '../style/image/race_logo.svg'
 import Wallet from '../style/image/wallet.png'
@@ -6,7 +6,11 @@ import HeroLeft from '../style/image/hero_left.png'
 import web3 from "web3";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FiExternalLink } from 'react-icons/fi'
 function MainHero() {
+    const UserWalletAddRef = useRef(null)
+    const [error, setError] = useState({ isEmpty: false, isValidAddress: false })
+
     const [walletAddress, setWalletAddresss] = useState("");
     const [transactionHash, setTransactionHash] = useState()
     const [nonce, setNonce] = useState()
@@ -19,11 +23,11 @@ function MainHero() {
     // RPC = https://racedevnet.io
     // value = 1000000000000000
 
-    console.log("walletAddress", walletAddress)
-    const errorhandeler = () => {
-        document.getElementById("wallet_address_error").style.display = "none"
-        // document.getElementById("wallet_address").style.display = "block"
-    }
+    // console.log("walletAddress", walletAddress)
+    // const errorhandeler = () => {
+    //     document.getElementById("wallet_address_error").style.display = "none"
+    //     // document.getElementById("wallet_address").style.display = "block"
+    // }
 
 
 
@@ -36,7 +40,7 @@ function MainHero() {
                 if (data) {
                     Web3.eth.getTransactionCount(address, 'latest')
                         .then((result) => {
-                            console.log("result", result)
+                            // console.log("result", result)
                             if (result) {
                                 setNonce(result)
                             }
@@ -55,13 +59,28 @@ function MainHero() {
 
 
     const submitHandler = () => {
+        // =========================================================================================================
+        const UserInput = UserWalletAddRef.current.value
+        const pattern = /\S/g
+        const isEmpty = pattern.test(UserInput)
+        const isValidAddress = web3.utils.isAddress(UserInput)
+        if (!isEmpty) { setError({ isEmpty: true, isValidAddress: false }); return }
+        if (!isValidAddress) { setError({ isEmpty: false, isValidAddress: true }); return }
+        if (isEmpty && isValidAddress) setError({ isEmpty: false, isValidAddress: false });
+        // =========================================================================================================
+        // const isValidInput = !isEmpty ? setError({ isEmpty: true, isValidAddress: false }) :
+        //     !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
+        //         setError({ isEmpty: false, isValidAddress: false })
 
-        console.log("resss", walletAddress)
-        if (walletAddress === null) {
-            document.getElementById("wallet_address_error").style.display = "block"
-            // document.getElementById("wallet_address").style.display = "none"
-            return
-        }
+        // console.log(isValidInput);
+
+        // return
+        // console.log("resss", walletAddress)
+        // if (walletAddress === null) {
+        //     // document.getElementById("wallet_address_error").style.display = "block"
+        //     // document.getElementById("wallet_address").style.display = "none"
+        //     return
+        // }
 
 
         const transaction = {
@@ -95,7 +114,6 @@ function MainHero() {
                                 setWalletAddresss("")
                                 console.log("🎉 The hash of your transaction is: ", hash, "\n Check Alchemy's Mempool to view the status of your transaction!");
                             } else {
-
                                 toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
                                     position: "top-center",
                                     autoClose: 5000,
@@ -161,15 +179,15 @@ function MainHero() {
                                                     <div className="wallet_icon">
                                                         <img src={Wallet} alt="" className='img-fluid' />
                                                     </div>
-                                                    <input type="text" placeholder='Enter Wallet Address' className='form-control'
+                                                    <input type="text" ref={UserWalletAddRef} placeholder='Enter Wallet Address' className='form-control'
                                                         value={walletAddress}
                                                         onChange={(e) => setWalletAddresss(e.target.value)}
-                                                        onKeyUp={errorhandeler}
+                                                        // onKeyUp={errorhandeler}
                                                     />
-                                                    <p id="wallet_address_error" style={{ color: "red", display: "none" }}>*Please Enter your wallet address</p>
+                                                    {/* <p id="wallet_address_error" style={{ color: "red", display: "none" }}>*Please Enter your wallet address</p> */}
                                                 </div>
-
-                                                    {/* <p id="wallet_address">Please enter your wallet address for RACE. It's free!</p> */}
+                                                {error.isEmpty && <p className='text-danger error'>Field cannot be empty!</p>}
+                                                {error.isValidAddress && <p className='text-danger error'>Wallet Address is not valid! Please enter valid address.</p>}
                                                 <div className="race_btn">
                                                     <button onClick={submitHandler}>Give Me RACE</button>
                                                 </div>
@@ -184,10 +202,16 @@ function MainHero() {
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                                        <tr>
-                                                                            <td>{transactionHash? transactionHash : "-"}</td>
-                                                                            <td>{transactionHash? 'Just Now' : '-'}</td>
-                                                                        </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    {
+                                                                        transactionHash ?
+                                                                            <a className='transaction_details d-flex align-items-center' target='_blank' href={`https://devnet.racescan.io/tx/${transactionHash}`}>{transactionHash} <FiExternalLink /></a>
+                                                                            : "-"
+                                                                    }
+                                                                </td>
+                                                                <td>{transactionHash ? 'Just Now' : '-'}</td>
+                                                            </tr>
                                                         </tbody>
                                                     </Table>
                                                 </div>

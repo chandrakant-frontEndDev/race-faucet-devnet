@@ -36,6 +36,12 @@
             background-color: #1d2b38;
             backdrop-filter: blur(10px);
 
+            .error{
+                margin: 0%;
+                font-size: 15px;
+                // display: none;
+            }
+
            h1 {
                 font-size: 5rem;
                 font-weight: 700;
@@ -142,6 +148,15 @@
                             font-weight: 500;
                             text-align: center;
                             width: 50%;
+
+                            .transaction_details{
+                                text-decoration: none;
+                                color: #0f1d32;
+
+                                svg{
+                                    margin-left: 1em;
+                                }
+                            }
                         }
                     }
                 }
