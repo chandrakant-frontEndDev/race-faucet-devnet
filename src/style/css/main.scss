@@ -2,14 +2,20 @@
 @import "./faq.scss";
 @import "./footer.scss";
 
-body{
+body {
     background-color: #0f1f2f;
 }
 
-.main_bg_img{
+.main_bg_img {
     width: 100%;
     background-image: url("../image/hero_bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
+
+.Toastify {
+    button {
+        display: none;
+    }
 }

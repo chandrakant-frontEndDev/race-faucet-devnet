@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Container, Row, Col, Table, Spinner } from 'react-bootstrap'
 import RaceLogo from '../style/image/race_logo.svg'
 import Wallet from '../style/image/wallet.png'
 import HeroLeft from '../style/image/hero_left.png'
@@ -8,6 +8,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FiExternalLink } from 'react-icons/fi'
 function MainHero() {
+
+    const [Loader, setLoader] = useState(false)
+    const submitRef = useRef(null)
+
     const UserWalletAddRef = useRef(null)
     const [error, setError] = useState({ isEmpty: false, isValidAddress: false })
 
@@ -57,8 +61,8 @@ function MainHero() {
 
 
 
-
-    const submitHandler = () => {
+    const [disBtn, setDisBtn] = useState(false)
+    const submitHandler = ({ currentTarget }) => {
         // =========================================================================================================
         const UserInput = UserWalletAddRef.current.value
         const pattern = /\S/g
@@ -67,6 +71,7 @@ function MainHero() {
         if (!isEmpty) { setError({ isEmpty: true, isValidAddress: false }); return }
         if (!isValidAddress) { setError({ isEmpty: false, isValidAddress: true }); return }
         if (isEmpty && isValidAddress) setError({ isEmpty: false, isValidAddress: false });
+        setDisBtn(true)
         // =========================================================================================================
         // const isValidInput = !isEmpty ? setError({ isEmpty: true, isValidAddress: false }) :
         //     !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
@@ -82,6 +87,7 @@ function MainHero() {
         //     return
         // }
 
+        // submitRef.current.setAttribute("disabled", true)
 
         const transaction = {
             'to': walletAddress,
@@ -92,6 +98,7 @@ function MainHero() {
 
 
         if (transaction) {
+            setLoader(true)
             Web3.eth.accounts.signTransaction(transaction, privateKey)
                 .then((data) => {
                     console.log("data", data)
@@ -103,34 +110,42 @@ function MainHero() {
                                 toast.success("ETH send successfully", {
                                     position: "top-center",
                                     autoClose: 5000,
-                                    hideProgressBar: true,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
+                                    hideProgressBar: false,
+                                    closeOnClick: false,
+                                    pauseOnHover: false,
+                                    draggable: false,
                                     progress: undefined,
                                     theme: 'colored'
                                 });
 
                                 setWalletAddresss("")
+                                setLoader(false)
+                                setTimeout(() => {
+                                    setDisBtn(false)
+                                }, 6000);
                                 console.log("🎉 The hash of your transaction is: ", hash, "\n Check Alchemy's Mempool to view the status of your transaction!");
                             } else {
                                 toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
                                     position: "top-center",
                                     autoClose: 5000,
-                                    hideProgressBar: true,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
+                                    hideProgressBar: false,
+                                    closeOnClick: false,
+                                    pauseOnHover: false,
+                                    draggable: false,
                                     progress: undefined,
                                     theme: 'colored'
                                 });
                                 setWalletAddresss("")
+                                setLoader(false)
+                                setDisBtn(false)
                                 console.log("❗Something went wrong while submitting your transaction:", error)
                             }
                         });
                     }
                 })
                 .catch((errpr) => {
+                    setLoader(false)
+                    setDisBtn(false)
                     console.log("errpr", errpr)
                 })
         }
@@ -182,14 +197,20 @@ function MainHero() {
                                                     <input type="text" ref={UserWalletAddRef} placeholder='Enter Wallet Address' className='form-control'
                                                         value={walletAddress}
                                                         onChange={(e) => setWalletAddresss(e.target.value)}
-                                                        // onKeyUp={errorhandeler}
+                                                    // onKeyUp={errorhandeler}
                                                     />
                                                     {/* <p id="wallet_address_error" style={{ color: "red", display: "none" }}>*Please Enter your wallet address</p> */}
                                                 </div>
                                                 {error.isEmpty && <p className='text-danger error'>Please enter your wallet address</p>}
                                                 {error.isValidAddress && <p className='text-danger error'>Wallet Address is not valid! Please enter valid address.</p>}
                                                 <div className="race_btn">
-                                                    <button onClick={submitHandler}>Give Me ETH</button>
+                                                    {Loader ?
+                                                        <button disabled>
+                                                            <Spinner animation='border' variant='dark' />
+                                                        </button>
+                                                        :
+                                                        <button disabled={disBtn ? true : false} ref={submitRef} onClick={submitHandler}>Give Me ETH</button>
+                                                    }
                                                 </div>
                                                 <p>What is the RACE faucet used for?</p>
 
@@ -228,7 +249,7 @@ function MainHero() {
             <ToastContainer
                 position="top-center"
                 autoClose={5000}
-                hideProgressBar
+                hideProgressBar={false}
                 newestOnTop={false}
                 closeOnClick
                 rtl={false}

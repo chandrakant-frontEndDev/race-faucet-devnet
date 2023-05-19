@@ -94,6 +94,10 @@
                     border-radius: 5px;
                     margin: 20px 0px;
                 }
+                button[disabled]{
+                    filter: grayscale(1) brightness(0.5) invert(1);
+                    cursor: not-allowed;
+                }
             }
 
             .transaction_table {
