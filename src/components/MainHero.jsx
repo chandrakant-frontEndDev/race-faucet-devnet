@@ -18,7 +18,7 @@ function MainHero() {
     const [walletAddress, setWalletAddresss] = useState("");
     const [transactionHash, setTransactionHash] = useState()
     const [nonce, setNonce] = useState()
-    const provider = new web3.providers.HttpProvider("http://43.204.127.52")
+    const provider = new web3.providers.HttpProvider("https://racetestnet.io")
     const Web3 = new web3(provider);
     // const privateKey = "62403e0d2a025624ffc4d402d028a899f613f529d8c7372028cbefd226929409"
     // const address = "0xD1c8cf8A8F73830a1e4BAb3C4C93E5f7B76B0B66"
@@ -227,7 +227,7 @@ function MainHero() {
                                                                 <td>
                                                                     {
                                                                         transactionHash ?
-                                                                            <a className='transaction_details d-flex align-items-center' target='_blank' href={`https://devnet.racescan.io/tx/${transactionHash}`}>{transactionHash} <FiExternalLink /></a>
+                                                                            <a className='transaction_details d-flex align-items-center' target='_blank' href={`https://testnet.racescan.io/tx/${transactionHash}`}>{transactionHash} <FiExternalLink /></a>
                                                                             : "-"
                                                                     }
                                                                 </td>
