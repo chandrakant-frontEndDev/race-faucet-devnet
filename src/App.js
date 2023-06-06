@@ -9,7 +9,7 @@ import Main from './components/Main';
 function App() {
   return (
     <>
-      <BrowserRouter basename='/devnet-racescan'>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />}></Route>
         </Routes>

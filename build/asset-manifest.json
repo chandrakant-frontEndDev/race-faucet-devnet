@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "./static/css/main.2a2da771.css",
-    "main.js": "./static/js/main.2f8e110a.js",
-    "static/js/787.bc0ab79d.chunk.js": "./static/js/787.bc0ab79d.chunk.js",
-    "static/media/hero_bg.png": "./static/media/hero_bg.942532f43eaef2ca28c3.png",
-    "static/media/hero_left.png": "./static/media/hero_left.26ff2945f92bb0800a3b.png",
-    "static/media/race_logo.svg": "./static/media/race_logo.e11b67d1e190e95d52e6039197294a0d.svg",
-    "index.html": "./index.html",
-    "main.2a2da771.css.map": "./static/css/main.2a2da771.css.map",
-    "main.2f8e110a.js.map": "./static/js/main.2f8e110a.js.map",
-    "787.bc0ab79d.chunk.js.map": "./static/js/787.bc0ab79d.chunk.js.map"
+    "main.css": "/static/css/main.5901edaf.css",
+    "main.js": "/static/js/main.8ca9db2d.js",
+    "static/js/787.bc0ab79d.chunk.js": "/static/js/787.bc0ab79d.chunk.js",
+    "static/media/hero_bg.png": "/static/media/hero_bg.942532f43eaef2ca28c3.png",
+    "static/media/hero_left.png": "/static/media/hero_left.26ff2945f92bb0800a3b.png",
+    "static/media/race_logo.svg": "/static/media/race_logo.e11b67d1e190e95d52e6039197294a0d.svg",
+    "index.html": "/index.html",
+    "main.5901edaf.css.map": "/static/css/main.5901edaf.css.map",
+    "main.8ca9db2d.js.map": "/static/js/main.8ca9db2d.js.map",
+    "787.bc0ab79d.chunk.js.map": "/static/js/787.bc0ab79d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2a2da771.css",
-    "static/js/main.2f8e110a.js"
+    "static/css/main.5901edaf.css",
+    "static/js/main.8ca9db2d.js"
   ]
 }
