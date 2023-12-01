@@ -18,12 +18,12 @@ function MainHero() {
     const [walletAddress, setWalletAddresss] = useState("");
     const [transactionHash, setTransactionHash] = useState()
     const [nonce, setNonce] = useState()
-    const provider = new web3.providers.HttpProvider("https://racedevnet.io")
+    const provider = new web3.providers.HttpProvider("https://racetestnet.io")
     const Web3 = new web3(provider);
     // const privateKey = "62403e0d2a025624ffc4d402d028a899f613f529d8c7372028cbefd226929409"
     // const address = "0xD1c8cf8A8F73830a1e4BAb3C4C93E5f7B76B0B66"
     const address = "0x8C8e74bce5091AADBB291BA9144252828664ab1C"
-    const privateKey = "734d124f945ca544d74be08e6c5e23bb321a28bfc26a88451fb8eb9f3bb35702"
+    const privateKey = process.env.REACT_APP_PRIVATE_KEY
     // RPC = https://racedevnet.io
     // value = 1000000000000000
 

@@ -33,7 +33,7 @@ function Faq() {
                         <Accordion.Item eventKey="1">
                           <Accordion.Header>How Does It Works?</Accordion.Header>
                           <Accordion.Body>
-                            You can request 0.001 Goerli ETH every 24h with a RACE Faucet.
+                            You can request 0.001 Sepolia ETH every 24h with a RACE Faucet.
                           </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="2">
@@ -45,7 +45,7 @@ function Faq() {
                         <Accordion.Item eventKey="3">
                           <Accordion.Header>What Is A Testnet Token?</Accordion.Header>
                           <Accordion.Body>
-                            Testnet tokens are a test currency that allows you to test your RACE application before going live on mainnet. Testnet tokens can be used in place of mainnet Ether tokens on testnets like Goerli.
+                            Testnet tokens are a test currency that allows you to test your RACE application before going live on mainnet. Testnet tokens can be used in place of mainnet Ether tokens on testnets like Sepolia.
                           </Accordion.Body>
                         </Accordion.Item>
                       </Accordion>
