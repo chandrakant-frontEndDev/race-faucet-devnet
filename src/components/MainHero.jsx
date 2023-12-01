@@ -227,7 +227,7 @@ function MainHero() {
                                                                 <td>
                                                                     {
                                                                         transactionHash ?
-                                                                            <a className='transaction_details d-flex align-items-center' target='_blank' href={`https://devnet.racescan.io/tx/${transactionHash}`}>{transactionHash} <FiExternalLink /></a>
+                                                                            <a className='transaction_details d-flex align-items-center' target='_blank' href={`https://testnet.racescan.io/tx/${transactionHash}`}>{transactionHash} <FiExternalLink /></a>
                                                                             : "-"
                                                                     }
                                                                 </td>
