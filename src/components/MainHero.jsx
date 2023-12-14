@@ -7,6 +7,7 @@ import web3 from "web3";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FiExternalLink } from 'react-icons/fi'
+import Cookies from 'js-cookie'
 function MainHero() {
 
     const [Loader, setLoader] = useState(false)
@@ -63,6 +64,21 @@ function MainHero() {
 
     const [disBtn, setDisBtn] = useState(false)
     const submitHandler = ({ currentTarget }) => {
+        const access_token = Cookies.get('uid')
+        console.log({ access_token });
+        if (!access_token) {
+            toast.error(`Please Sign In GitHub to continue`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                theme: 'colored'
+            });
+            return
+        }
         // =========================================================================================================
         const UserInput = UserWalletAddRef.current.value
         const pattern = /\S/g
