@@ -7,7 +7,6 @@ import Cookies from 'js-cookie'
 
 function Main() {
     const [isLogin, setIsLogin] = useState(false)
-    // const onLogout = useCallback(() => {}, []);
     const user = Cookies.get('uid')
     useEffect(() => {
         if (user) {
@@ -21,13 +20,16 @@ function Main() {
         <>
             <div className='main_bg_img'>
                 {isLogin ?
-                    <button>Welcome</button>
+                    <figure className='github_btn_wrap'>
+                        <button type='button' className='btn'>Welcome</button>
+                    </figure>
                     :
                     <SocialButton>
-                        <button>Sign In with Github</button>
+                        <figure className='github_btn_wrap'>
+                            <button type='button' className='btn'>Sign In with Github</button>
+                        </figure>
                     </SocialButton>
                 }
-                {/* <button onClick={onLogout}>logout</button> */}
                 <MainHero />
                 <Faq />
             </div>

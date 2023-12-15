@@ -12,6 +12,23 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+
+    .github_btn_wrap {
+        position: relative;
+        margin: 0px;
+        button {
+            background: linear-gradient(90.37deg, #FFFFFF 0.29%, #C6AD78 99.68%);
+            padding: 13px;
+            color: #000;
+            font-size: 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+    }
 }
 
 .Toastify {
