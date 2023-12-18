@@ -12,7 +12,6 @@ export default function SocialButton({ children }) {
                 redirect_uri={REDIRECT_URL}
                 scope='read:org'
                 onResolve={(user) => {
-                    console.log( user.data.access_token);
                     Cookies.set('uid', user.data.access_token)
                 }}
                 onReject={(err) => {

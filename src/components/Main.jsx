@@ -9,11 +9,8 @@ function Main() {
     const [isLogin, setIsLogin] = useState(false)
     const user = Cookies.get('uid')
     useEffect(() => {
-        if (user) {
-            setIsLogin(true)
-        } else {
-            setIsLogin(false)
-        }
+        if (user) setIsLogin(true) 
+        else setIsLogin(false)
     }, [user])
 
     return (
@@ -24,7 +21,7 @@ function Main() {
                         <button type='button' className='btn'>Welcome</button>
                     </figure>
                     :
-                    <SocialButton>
+                    <SocialButton liftState={setIsLogin}>
                         <figure className='github_btn_wrap'>
                             <button type='button' className='btn'>Sign In with Github</button>
                         </figure>

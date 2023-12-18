@@ -2,7 +2,7 @@ import React from 'react'
 import { LoginSocialGoogle } from 'reactjs-social-login';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-export default function SocialButton({ children }) {
+export default function SocialButton({ children, liftState }) {
     const REDIRECT_URL = window.location.href
     const handleResolve = async (data) => {
         try {
@@ -10,8 +10,9 @@ export default function SocialButton({ children }) {
                 email: data.data.email,
                 accessToken: data.data.access_token
             }
-            const apiData = await axios.post("http://192.168.0.99:5000/auth/signInWithGmail", bodyData)
-            console.log("data", apiData)
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/signInWithGmail`, bodyData)
+            Cookies.set("uid", JSON.stringify(bodyData))
+            liftState(true)
         } catch (error) {
             console.log("error", error)
         }
@@ -31,7 +32,6 @@ export default function SocialButton({ children }) {
                 onLogoutSuccess={(logout) => {
                     console.log({ logout });
                 }}
-            // allow_signup={false}
             >
                 {children}
             </LoginSocialGoogle>

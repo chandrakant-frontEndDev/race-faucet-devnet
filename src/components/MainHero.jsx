@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FiExternalLink } from 'react-icons/fi'
 import Cookies from 'js-cookie'
+import axios from 'axios'
 function MainHero() {
 
     const [Loader, setLoader] = useState(false)
@@ -28,7 +29,6 @@ function MainHero() {
     // RPC = https://racedevnet.io
     // value = 1000000000000000
 
-    // console.log("walletAddress", walletAddress)
     // const errorhandeler = () => {
     //     document.getElementById("wallet_address_error").style.display = "none"
     //     // document.getElementById("wallet_address").style.display = "block"
@@ -45,7 +45,6 @@ function MainHero() {
                 if (data) {
                     Web3.eth.getTransactionCount(address, 'latest')
                         .then((result) => {
-                            // console.log("result", result)
                             if (result) {
                                 setNonce(result)
                             }
@@ -63,11 +62,10 @@ function MainHero() {
 
 
     const [disBtn, setDisBtn] = useState(false)
-    const submitHandler = ({ currentTarget }) => {
-        const access_token = Cookies.get('uid')
-        console.log({ access_token });
-        if (!access_token) {
-            toast.error(`Please Sign In GitHub to continue`, {
+    const submitHandler = async ({ currentTarget }) => {
+        const user = Cookies.get('uid')
+        if (!user) {
+            toast.error(`Please Sign In Google to continue`, {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -93,10 +91,8 @@ function MainHero() {
         //     !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
         //         setError({ isEmpty: false, isValidAddress: false })
 
-        // console.log(isValidInput);
 
         // return
-        // console.log("resss", walletAddress)
         // if (walletAddress === null) {
         //     // document.getElementById("wallet_address_error").style.display = "block"
         //     // document.getElementById("wallet_address").style.display = "none"
@@ -104,75 +100,98 @@ function MainHero() {
         // }
 
         // submitRef.current.setAttribute("disabled", true)
+        try {
+            const userDetails = JSON.parse(user)
+            const api = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/isTimeExpired`, {
+                email: userDetails.email,
+                accessToken: userDetails.accessToken
+            })
+            if (api) {
+                const transaction = {
+                    'to': walletAddress,
+                    'value': 1000000000000000,
+                    'gas': 30000,
+                    'nonce': nonce,
+                };
+                if (transaction) {
+                    setLoader(true)
+                    Web3.eth.accounts.signTransaction(transaction, privateKey)
+                        .then((data) => {
+                            if (data) {
 
-        const transaction = {
-            'to': walletAddress,
-            'value': 1000000000000000,
-            'gas': 30000,
-            'nonce': nonce,
-        };
+                                Web3.eth.sendSignedTransaction(data.rawTransaction, function (error, hash) {
+                                    if (!error) {
+                                        setTransactionHash(hash)
+                                        toast.success("ETH send successfully", {
+                                            position: "top-center",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: false,
+                                            pauseOnHover: false,
+                                            draggable: false,
+                                            progress: undefined,
+                                            theme: 'colored'
+                                        });
 
+                                        setWalletAddresss("")
+                                        setLoader(false)
+                                        setTimeout(() => {
+                                            setDisBtn(false)
+                                        }, 6000);
 
-        if (transaction) {
-            setLoader(true)
-            Web3.eth.accounts.signTransaction(transaction, privateKey)
-                .then((data) => {
-                    console.log("data", data)
-                    if (data) {
-
-                        Web3.eth.sendSignedTransaction(data.rawTransaction, function (error, hash) {
-                            if (!error) {
-                                setTransactionHash(hash)
-                                toast.success("ETH send successfully", {
-                                    position: "top-center",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: false,
-                                    pauseOnHover: false,
-                                    draggable: false,
-                                    progress: undefined,
-                                    theme: 'colored'
+                                        axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updateTime`, {
+                                            email: userDetails.email,
+                                            accessToken: userDetails.accessToken
+                                        }).then((res) => { }).catch((err) => { console.log(err) })
+                                    } else {
+                                        toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
+                                            position: "top-center",
+                                            autoClose: 5000,
+                                            hideProgressBar: false,
+                                            closeOnClick: false,
+                                            pauseOnHover: false,
+                                            draggable: false,
+                                            progress: undefined,
+                                            theme: 'colored'
+                                        });
+                                        setWalletAddresss("")
+                                        setLoader(false)
+                                        setDisBtn(false)
+                                    }
                                 });
-
-                                setWalletAddresss("")
-                                setLoader(false)
-                                setTimeout(() => {
-                                    setDisBtn(false)
-                                }, 6000);
-                                console.log("🎉 The hash of your transaction is: ", hash, "\n Check Alchemy's Mempool to view the status of your transaction!");
-                            } else {
-                                toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
-                                    position: "top-center",
-                                    autoClose: 5000,
-                                    hideProgressBar: false,
-                                    closeOnClick: false,
-                                    pauseOnHover: false,
-                                    draggable: false,
-                                    progress: undefined,
-                                    theme: 'colored'
-                                });
-                                setWalletAddresss("")
-                                setLoader(false)
-                                setDisBtn(false)
-                                console.log("❗Something went wrong while submitting your transaction:", error)
                             }
-                        });
-                    }
-                })
-                .catch((errpr) => {
-                    setLoader(false)
-                    setDisBtn(false)
-                    console.log("errpr", errpr)
-                })
+                        })
+                        .catch((errpr) => {
+                            setLoader(false)
+                            setDisBtn(false)
+                            console.log("errpr", errpr)
+                        })
+                }
+            }
+        } catch (error) {
+            if (error.response.data.message === "Time is not expired yet") {
+                toast.error(`Time is not expired yet, Please try again`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: undefined,
+                    theme: 'colored'
+                });
+                setWalletAddresss("")
+                setLoader(false)
+                setDisBtn(false)
+            }
+            console.log(error)
         }
 
     }
 
     if (transactionHash) {
         Web3.eth.getTransaction(transactionHash)
-            .then((data) => {
-                console.log("data", data)
-            })
+            .then((data) => { })
             .catch((erro) => {
                 console.log("erro", erro);
             })
@@ -202,7 +221,7 @@ function MainHero() {
                                         <div className="race_faucet_bg">
                                             <div className="main_content">
                                                 <h1>RACE Faucet</h1>
-                                                <h6>Receive 0.001 ETH / Day. Fast & Reliable.
+                                                <h6>Receive 0.001 ETH / 4 Hours. Fast & Reliable.
                                                     <br></br>No Authentication Needed.
                                                 </h6>
 
