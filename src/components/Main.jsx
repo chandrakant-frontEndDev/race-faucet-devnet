@@ -23,7 +23,7 @@ function Main() {
                     :
                     <SocialButton liftState={setIsLogin}>
                         <figure className='github_btn_wrap'>
-                            <button type='button' className='btn'>Sign In with Github</button>
+                            <button type='button' className='btn'>Sign In with Google</button>
                         </figure>
                     </SocialButton>
                 }
