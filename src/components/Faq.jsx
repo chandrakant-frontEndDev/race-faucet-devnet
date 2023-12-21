@@ -4,7 +4,7 @@ import { Container, Row, Col, Accordion } from 'react-bootstrap'
 function Faq() {
   return (
     <>
-      <div className="faq_section">
+      <div className="faq_section" data-scroll-section>
         <Container fluid>
           <Row className='justify-content-center'>
             <Col xl={10} lg={12} md={12} sm={12}>

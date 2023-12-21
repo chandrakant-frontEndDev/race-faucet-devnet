@@ -65,7 +65,7 @@ function MainHero() {
     const submitHandler = async ({ currentTarget }) => {
         const user = Cookies.get('uid')
         if (!user) {
-            toast.error(`Please Sign In Google to continue`, {
+            toast.error(`Please Sign In to continue`, {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -104,7 +104,8 @@ function MainHero() {
             const userDetails = JSON.parse(user)
             const api = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/isTimeExpired`, {
                 email: userDetails.email,
-                accessToken: userDetails.accessToken
+                accessToken: userDetails.accessToken,
+                type: userDetails.type
             })
             if (api) {
                 const transaction = {
@@ -141,7 +142,8 @@ function MainHero() {
 
                                         axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updateTime`, {
                                             email: userDetails.email,
-                                            accessToken: userDetails.accessToken
+                                            accessToken: userDetails.accessToken,
+                                            type: userDetails.type
                                         }).then((res) => { }).catch((err) => { console.log(err) })
                                     } else {
                                         toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
@@ -185,6 +187,8 @@ function MainHero() {
                 setDisBtn(false)
             }
             console.log(error)
+            setLoader(false)
+            setDisBtn(false)
         }
 
     }
