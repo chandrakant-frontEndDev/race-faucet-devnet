@@ -33,7 +33,7 @@ function Faq() {
                         <Accordion.Item eventKey="1">
                           <Accordion.Header>How Does It Works?</Accordion.Header>
                           <Accordion.Body>
-                            You can request 0.001 Sepolia ETH every 24h with a RACE Faucet.
+                            You can request 0.001 Race ETH every 4 hours with a RACE Faucet.
                           </Accordion.Body>
                         </Accordion.Item>
                         <Accordion.Item eventKey="2">

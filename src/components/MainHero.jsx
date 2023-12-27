@@ -77,6 +77,7 @@ function MainHero() {
             });
             return
         }
+        
         // =========================================================================================================
         const UserInput = UserWalletAddRef.current.value
         const pattern = /\S/g
