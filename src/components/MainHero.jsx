@@ -104,9 +104,10 @@ function MainHero() {
         try {
             const userDetails = JSON.parse(user)
             const api = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/isTimeExpired`, {
-                email: userDetails.email,
+                email: userDetails.email ? userDetails.email : "",
                 accessToken: userDetails.accessToken,
-                type: userDetails.type
+                type: userDetails.type,
+		userName : userDetails.userName
             })
             if (api) {
                 const transaction = {
@@ -142,9 +143,11 @@ function MainHero() {
                                         }, 6000);
 
                                         axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updateTime`, {
-                                            email: userDetails.email,
-                                            accessToken: userDetails.accessToken,
-                                            type: userDetails.type
+                                        email: userDetails.email ? userDetails.email : "",
+                                        accessToken: userDetails.accessToken,
+                                        type: userDetails.type,
+			                userName : userDetails.userName
+
                                         }).then((res) => { }).catch((err) => { console.log(err) })
                                     } else {
                                         toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
@@ -173,7 +176,7 @@ function MainHero() {
             }
         } catch (error) {
             if (error.response.data.message === "Time is not expired yet") {
-                toast.error(`Time is not expired yet, Please try again`, {
+                toast.error(`Time is not expired yet, Please try again after 4 hours`, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
