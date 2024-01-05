@@ -22,23 +22,8 @@ function MainHero() {
     const [nonce, setNonce] = useState()
     const provider = new web3.providers.HttpProvider("https://racetestnet.io")
     const Web3 = new web3(provider);
-    // const privateKey = "62403e0d2a025624ffc4d402d028a899f613f529d8c7372028cbefd226929409"
-    // const address = "0xD1c8cf8A8F73830a1e4BAb3C4C93E5f7B76B0B66"
     const address = "0x8C8e74bce5091AADBB291BA9144252828664ab1C"
     const privateKey = process.env.REACT_APP_PRIVATE_KEY
-    // RPC = https://racedevnet.io
-    // value = 1000000000000000
-
-    // const errorhandeler = () => {
-    // document.getElementById("wallet_address_error").style.display = "none"
-    // // document.getElementById("wallet_address").style.display = "block"
-    // }
-
-
-
-
-
-
     useEffect(() => {
         Web3.eth.net.isListening()
             .then((data) => {
@@ -88,19 +73,6 @@ function MainHero() {
         if (isEmpty && isValidAddress) setError({ isEmpty: false, isValidAddress: false });
         setDisBtn(true)
         // =========================================================================================================
-        // const isValidInput = !isEmpty ? setError({ isEmpty: true, isValidAddress: false }) :
-        // !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
-        // setError({ isEmpty: false, isValidAddress: false })
-
-
-        // return
-        // if (walletAddress === null) {
-        // // document.getElementById("wallet_address_error").style.display = "block"
-        // // document.getElementById("wallet_address").style.display = "none"
-        // return
-        // }
-
-        // submitRef.current.setAttribute("disabled", true)
         try {
             const userDetails = JSON.parse(user)
             const api = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/isTimeExpired`, {
@@ -240,9 +212,7 @@ function MainHero() {
                                                     <input type="text" ref={UserWalletAddRef} placeholder='Enter Wallet Address' className='form-control'
                                                         value={walletAddress}
                                                         onChange={(e) => setWalletAddresss(e.target.value)}
-                                                    // onKeyUp={errorhandeler}
                                                     />
-                                                    {/* <p id="wallet_address_error" style={{ color: "red", display: "none" }}>*Please Enter your wallet address</p> */}
                                                 </div>
                                                 {error.isEmpty && <p className='text-danger error'>Please enter your wallet address</p>}
                                                 {error.isValidAddress && <p className='text-danger error'>Wallet Address is not valid! Please enter valid address.</p>}
