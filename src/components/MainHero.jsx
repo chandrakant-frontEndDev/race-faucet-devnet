@@ -30,8 +30,8 @@ function MainHero() {
     // value = 1000000000000000
 
     // const errorhandeler = () => {
-    //     document.getElementById("wallet_address_error").style.display = "none"
-    //     // document.getElementById("wallet_address").style.display = "block"
+    // document.getElementById("wallet_address_error").style.display = "none"
+    // // document.getElementById("wallet_address").style.display = "block"
     // }
 
 
@@ -77,7 +77,7 @@ function MainHero() {
             });
             return
         }
-        
+
         // =========================================================================================================
         const UserInput = UserWalletAddRef.current.value
         const pattern = /\S/g
@@ -89,24 +89,25 @@ function MainHero() {
         setDisBtn(true)
         // =========================================================================================================
         // const isValidInput = !isEmpty ? setError({ isEmpty: true, isValidAddress: false }) :
-        //     !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
-        //         setError({ isEmpty: false, isValidAddress: false })
+        // !isValidAddress ? setError({ isEmpty: false, isValidAddress: true }) :
+        // setError({ isEmpty: false, isValidAddress: false })
 
 
         // return
         // if (walletAddress === null) {
-        //     // document.getElementById("wallet_address_error").style.display = "block"
-        //     // document.getElementById("wallet_address").style.display = "none"
-        //     return
+        // // document.getElementById("wallet_address_error").style.display = "block"
+        // // document.getElementById("wallet_address").style.display = "none"
+        // return
         // }
 
         // submitRef.current.setAttribute("disabled", true)
         try {
             const userDetails = JSON.parse(user)
             const api = await axios.put(`${process.env.REACT_APP_BASE_URL}/auth/isTimeExpired`, {
-                email: userDetails.email,
+                email: userDetails.email ? userDetails.email : "",
                 accessToken: userDetails.accessToken,
-                type: userDetails.type
+                type: userDetails.type,
+                userName: userDetails.userName
             })
             if (api) {
                 const transaction = {
@@ -142,12 +143,14 @@ function MainHero() {
                                         }, 6000);
 
                                         axios.put(`${process.env.REACT_APP_BASE_URL}/auth/updateTime`, {
-                                            email: userDetails.email,
+                                            email: userDetails.email ? userDetails.email : "",
                                             accessToken: userDetails.accessToken,
-                                            type: userDetails.type
+                                            type: userDetails.type,
+                                            userName: userDetails.userName
+
                                         }).then((res) => { }).catch((err) => { console.log(err) })
                                     } else {
-                                        toast.error(`❗Something went wrong while submitting your transaction:${error}`, {
+                                        toast.error(`Something went wrong while submitting your transaction:${error}`, {
                                             position: "top-center",
                                             autoClose: 5000,
                                             hideProgressBar: false,
@@ -173,7 +176,7 @@ function MainHero() {
             }
         } catch (error) {
             if (error.response.data.message === "Time is not expired yet") {
-                toast.error(`Time is not expired yet, Please try again`, {
+                toast.error(`Time is not expired yet, Please try again after 4 hours`, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

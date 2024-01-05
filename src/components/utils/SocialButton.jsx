@@ -49,41 +49,22 @@ export default function SocialButton({ children, liftState, client_id, client_se
     return (
         <>
             <ToastContainer />
-            {loginType === "gmail" ?
-                <LoginSocialGoogle
-                    className='text-end p-2'
-                    client_id={client_id}
-                    client_secret={client_secret}
-                    redirect_uri={REDIRECT_URL}
-                    scope={scope}
-                    onResolve={handleResolve}
-                    onReject={(err) => {
-                        console.log(err);
-                    }}
-                    onLogoutSuccess={(logout) => {
-                        console.log({ logout });
-                    }}
-                >
-                    {children}
-                </LoginSocialGoogle>
-                :
-                <LoginSocialGithub
-                    className='text-end p-2'
-                    client_id={client_id}
-                    client_secret={client_secret}
-                    redirect_uri={REDIRECT_URL}
-                    scope={scope}
-                    onResolve={handleResolve}
-                    onReject={(err) => {
-                        console.log(err);
-                    }}
-                    onLogoutSuccess={(logout) => {
-                        console.log({ logout });
-                    }}
-                >
-                    {children}
-                </LoginSocialGithub>
-            }
+            <LoginSocialGoogle
+                className='text-end p-2'
+                client_id={client_id}
+                client_secret={client_secret}
+                redirect_uri={REDIRECT_URL}
+                scope={scope}
+                onResolve={handleResolve}
+                onReject={(err) => {
+                    console.log(err);
+                }}
+                onLogoutSuccess={(logout) => {
+                    console.log({ logout });
+                }}
+            >
+                {children}
+            </LoginSocialGoogle>
         </>
     )
 }

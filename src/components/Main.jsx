@@ -5,6 +5,7 @@ import Footer from './common/Footer'
 import SocialButton from './utils/SocialButton'
 import Cookies from 'js-cookie'
 import { Spinner } from 'react-bootstrap'
+import GithubLogin from './utils/GithubLogin'
 
 function Main() {
     const [isLogin, setIsLogin] = useState(false)
@@ -54,18 +55,7 @@ function Main() {
                                             <button type='button' className='btn'>Sign In with Google</button>
                                         </figure>
                                     </SocialButton>
-                                    <SocialButton
-                                        setIsLoading={setIsLoading}
-                                        loginType="github"
-                                        liftState={setIsLogin}
-                                        scope="read:org"
-                                        client_id={process.env.REACT_APP_GITHUB_CLIENT_ID}
-                                        client_secret={process.env.REACT_APP_GITHUB_CLIENT_SECRET}
-                                    >
-                                        <div className='github_btn_wrap'>
-                                            <button type='button' className='btn'>Sign In with Github</button>
-                                        </div>
-                                    </SocialButton>
+                                    <GithubLogin/>
                                 </>
                         }
                     </div>
