@@ -19,7 +19,7 @@ export default function GithubLogin() {
                     return res.json()
                 }).then((data) => {
                     if (data) {
-                        Cookies.set("uid", JSON.stringify(data))
+                        Cookies.set("uid", JSON.stringify({...data, type: "github"}))
                         window.location.href = "/"
                     }
                 }).catch((e) => {
